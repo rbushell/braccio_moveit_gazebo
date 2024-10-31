@@ -22,7 +22,8 @@ void chatterCallback(const sensor_msgs::JointState::ConstPtr& msg)
   int i=0;
   for(i=0; i<6; i++)
   {
-    //ROS_INFO("I heard: [%d]", uint((msg->position[i])/PI*180));
+    ROS_INFO("Position: [%d]", uint((msg->position[i])/PI*180));
+    ROS_INFO("Name: [%s]", std::string((msg->name[i])).c_str());
 
     _DataArray[std::string((msg->name[i]))]= uint((msg->position[i])/PI*180);
   }
@@ -82,6 +83,7 @@ int main(int argc, char **argv)
     array.data.push_back(_DataArray["wrist_pitch_joint"]);
     array.data.push_back(_DataArray["wrist_roll_joint"]);
     array.data.push_back(_DataArray["gripper_joint"]);
+
     pub.publish(array);
 
     ros::spinOnce();
